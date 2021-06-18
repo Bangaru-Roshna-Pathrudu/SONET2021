@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX</title>
+    <script>
+        // create a request
+        var request = new XMLHttpRequest();
+        // response
+        request.open("GET",'url',true);
+        // parse the response
+        request.onload = function() {
+            if( request.status>=200 && request.status<400 ){
+                var data = JSON.parse(request.responseText);
+                console.log(data);    
+                document.getElementById('temp').innerHTML = data.main.temp;
+                document.getElementById('weather').innerHTML = data.weather[0].description;
+                var icon = data.weather[0].icon + ".png";
+                document.getElementById('myimg').src = "https://openweathermap.org/img/w/"+icon;
+            }
+            else{
+                console.log("There's some error");
+            }
+        };
+        // manage error
+        request.onerror = function() {
+            console.log("connection error");
+        };
+        // send the request
+        request.send();          
+    </script>
+</head>
+<body>
+    <h1> Hey there, here is AJAX!</h1>
+
+    <h2 id="temp">Temp here</h2>
+    <h2 id="weather">Weather here</h2>
+    <img src="img.png" alt="weather image here">
+    
+</body>
+</html>
